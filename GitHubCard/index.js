@@ -4,6 +4,17 @@
     https://api.github.com/users/<your name>
 */
 
+axios.get(' https://api.github.com/users/katherineyevsukov')
+  .then(res => {
+    console.log(res)
+   const kat = cardCreator(res.data)
+   document.querySelector('.cards').appendChild(kat)
+   console.log(kat)
+  })
+  .catch(err => {
+    console.error(err)
+  })
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -49,6 +60,55 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardCreator({ avatar_url, name, login, location, html_url, followers, following, bio }){
+  const card = document.createElement('div')
+  const pic = document.createElement('img')
+  const info = document.createElement('div')
+  const myName = document.createElement('h3')
+  const myUsername = document.createElement('p')
+  const place = document.createElement('p')
+  const profile = document.createElement('p')
+  const link = document.createElement('a')
+  const myFollowers = document.createElement('p')
+  const myFollowing = document.createElement('p')
+  const about = document.createElement('p')
+
+
+  card.appendChild(pic)
+  card.appendChild(info)
+  info.appendChild(myName)
+  info.appendChild(myUsername)
+  info.appendChild(place)
+  info.appendChild(profile)
+  profile.appendChild(link)
+  info.appendChild(myFollowers)
+  info.appendChild(myFollowing)
+  info.appendChild(about)
+  console.log(profile)
+
+  card.classList.add('card')
+  pic.setAttribute('src', `${avatar_url}`)
+  pic.setAttribute('alt', `This is a picture of ${name}`)
+  info.classList.add('card-info')
+  myName.classList.add('name')
+  myName.textContent = `Name: ${name}`
+  myUsername.classList.add('username')
+  myUsername.textContent = `Username: ${login}`
+  place.textContent = `Location: ${location ? location : 'I have no location'}`
+  profile.textContent = 'Profile:'
+  link.setAttribute('src', `${html_url}`)
+  link.textContent = html_url
+  myFollowers.textContent = `Followers: ${followers}`
+  myFollowing.textContent = `Following: ${following}`
+  about.textContent = `Bio: ${bio ? bio : 'I have no bio'}`
+  
+  console.log(profile)
+  console.log(link)
+  
+
+  return card
+}
 
 /*
   List of LS Instructors Github username's:
